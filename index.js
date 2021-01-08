@@ -2,7 +2,11 @@ const fetch = require('node-fetch');
 const { Client } = require('whatsapp-web.js');
 // const client = new Client({ puppeteer: { headless: false }});
 const qrcode = require('qrcode-terminal');
-const client = new Client();
+const client = new Client({puppeteer: {
+  args: [
+      '--no-sandbox',
+  ],
+}});
 var actualValue = 0
 var users_eth = []
 
