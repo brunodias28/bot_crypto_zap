@@ -1,13 +1,15 @@
 const fetch = require('node-fetch');
 const { Client } = require('whatsapp-web.js');
-const client = new Client({ puppeteer: { headless: false }});
+// const client = new Client({ puppeteer: { headless: false }});
+const qrcode = require('qrcode-terminal');
+const client = new Client();
 var actualValue = 0
 var users_eth = []
 
 
 client.on('qr', (qr) => {
   // Generate and scan this code with your phone
-  console.log('QR RECEIVED', qr);
+  qrcode.generate(qr, {small: true});
 });
 
 client.on('ready', async () => {
