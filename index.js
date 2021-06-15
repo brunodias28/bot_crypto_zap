@@ -8,6 +8,7 @@ args: [
       '--no-sandbox',
   ],
 }});
+var http = require('http');
 var actualValue = 0
 var users_eth = []
 
@@ -116,3 +117,25 @@ function relDiff(a, b) {
   }
   return a-b === 0 ? 0 : 100 * Math.abs( ( a - b ) / b  ) || 'error';
 }
+
+var hostname  = '127.0.0.1';
+var port      = 3000;
+
+var app = http.createServer(async function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  let url = req.url;
+  if(url ==='/send' && req.method == 'POST' ){
+    var body = "";
+    req.on("data", async function (chunk) {
+        body += chunk;
+        const json = await JSON.parse(body)
+        console.log(json)
+        client.sendMessage(json.number, json.msg)
+    });
+    res.end(
+      JSON.stringify({result: "nensagem enviada"})
+    );
+  }
+});
+
+app.listen(port, hostname);
